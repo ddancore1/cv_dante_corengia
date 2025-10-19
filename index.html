@@ -16,6 +16,7 @@
                 </div>
                 <div class="actions">
                     <button class="btn ghost" id="toggleLang">Ver en Ingles</button>
+                    <button class="btn ghost" id="downloadIMG">Descargar imagen</button>
                 </div>
             </header>
 
@@ -55,8 +56,7 @@
                         <div id="education">
                             <div id="edu1"><strong>Tecnicatura en Programación</strong> — UTN Pacheco (En curso)</div>
                             <div id="edu2"><strong>Desarrollo Web</strong> — Coderhouse (Completado - 2024)</div>
-                            <div id="edu3"><strong>Ciencias de la Computación (CBC)</strong> — Universidad de Buenos Aires (Completado - 2023)</div>
-                            <div id="edu4"><strong>Bachiller en Artes Audiovisuales</strong> — Instituto 20 de Junio (Completado - 2022)</div>
+                            <div id="edu3"><strong>Bachiller en Artes Audiovisuales</strong> — Instituto 20 de Junio (Completado - 2022)</div>
                         </div>
 
                     </article>
@@ -100,14 +100,13 @@
         </div>
     </div>
 
-    
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const translations = {
                 es: {
                     toggle: "Ver en Inglés",
+                    download: "Descargar imagen",
                     title: "Estudiante de Programación",
                     profileHeading: "Perfil profesional",
                     profileText: "Estudiante de Programación orientado al desarrollo de software y web. Con conocimientos en C++, C#, Python, JavaScript y entornos de servidor. Aprendo rápido, me adapto con facilidad y busco mejorar mi experiencia laboral",
@@ -126,8 +125,7 @@
                     eduHeading: "Educación",
                     edu1: "<strong>Tecnicatura en Programación</strong> — UTN Pacheco (En curso)",
                     edu2: "<strong>Desarrollo Web</strong> — Coderhouse (Completado - 2024)",
-                    edu3: "<strong>Ciencias de la Computación (CBC)</strong> — Universidad de Buenos Aires (Completado - 2023)",
-                    edu4: "<strong>Bachiller en Artes Audiovisuales</strong> — Instituto 20 de Junio (Completado - 2022)",
+                    edu3: "<strong>Bachiller en Artes Audiovisuales</strong> — Instituto 20 de Junio (Completado - 2022)",
                     contactHeading: "Contacto",
                     contactInfo: "Dante.corengia@gmail.com<br>+54 11 2178-9100<br>San Isidro, Buenos Aires",
                     skillsHeading: "Conocimientos",
@@ -137,6 +135,7 @@
                 },
                 en: {
                     toggle: "View in Spanish",
+                    download: "Download image",
                     title: "Programming Student",
                     profileHeading: "Professional Profile",
                     profileText: "Programming student focused on software and web development. Knowledgeable in C++, C#, Python, JavaScript, and server environments. Quick learner, adaptable, and seeking to improve my professional experience.",
@@ -155,8 +154,7 @@
                     eduHeading: "Education",
                     edu1: "<strong>Programming Technician Degree</strong> — UTN Pacheco (Ongoing)",
                     edu2: "<strong>Web Development</strong> — Coderhouse (Completed - 2024)",
-                    edu3: "<strong>Computer Science (CBC)</strong> — University of Buenos Aires (Completed - 2023)",
-                    edu4: "<strong>Bachelor in Audiovisual Arts</strong> — Instituto 20 de Junio (Completed - 2022)",
+                    edu3: "<strong>Bachelor in Audiovisual Arts</strong> — Instituto 20 de Junio (Completed - 2022)",
                     contactHeading: "Contact",
                     contactInfo: "Dante.corengia@gmail.com<br>+54 11 2178-9100<br>San Isidro, Buenos Aires",
                     skillsHeading: "Skills",
@@ -167,20 +165,19 @@
             };
 
             let lang = "es";
-
             const toggle = document.getElementById("toggleLang");
             toggle.addEventListener("click", () => {
                 lang = lang === "es" ? "en" : "es";
                 const t = translations[lang];
-
                 document.getElementById("toggleLang").innerText = t.toggle;
+                document.getElementById("downloadIMG").innerText = t.download;
                 document.getElementById("title").innerText = t.title;
                 document.getElementById("heading-profile").innerText = t.profileHeading;
                 document.getElementById("profile").innerText = t.profileText;
                 document.getElementById("exp-heading").innerText = t.expHeading;
                 document.getElementById("exp1-title").innerText = t.exp1Title;
                 document.getElementById("exp1-date").innerText = t.exp1Date;
-                document.getElementById("exp1-list").innerHTML = t.exp1List.map(item => `<li>${item}</li>`).join("");
+                document.getElementById("exp1-list").innerHTML = t.exp1List.map(i => `<li>${i}</li>`).join("");
                 document.getElementById("exp2-title").innerText = t.exp2Title;
                 document.getElementById("exp2-date").innerText = t.exp2Date;
                 document.getElementById("exp3-title").innerText = t.exp3Title;
@@ -189,16 +186,30 @@
                 document.getElementById("edu1").innerHTML = t.edu1;
                 document.getElementById("edu2").innerHTML = t.edu2;
                 document.getElementById("edu3").innerHTML = t.edu3;
-                document.getElementById("edu4").innerHTML = t.edu4;
                 document.getElementById("contact-heading").innerText = t.contactHeading;
                 document.getElementById("contact-info").innerHTML = t.contactInfo;
                 document.getElementById("skills-heading").innerText = t.skillsHeading;
-                document.getElementById("skills-list").innerHTML = t.skillsList.map(skill => `<li class="skill">${skill}</li>`).join("");
+                document.getElementById("skills-list").innerHTML = t.skillsList.map(s => `<li class="skill">${s}</li>`).join("");
                 document.getElementById("lang-heading").innerText = t.langHeading;
                 document.getElementById("languages").innerHTML = t.languages;
             });
         });
+
+        document.getElementById("downloadIMG").addEventListener("click", () => {
+            const element = document.querySelector(".card");
+            const actions = document.querySelector(".actions");
+            actions.style.display = "none";
+
+            html2canvas(element, { scale: 2, useCORS: true }).then(canvas => {
+                const link = document.createElement("a");
+                link.download = "CV_Dante_Corengia.png";
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                actions.style.display = ""; 
+            });
+        });
     </script>
+
 
 
 </body>
